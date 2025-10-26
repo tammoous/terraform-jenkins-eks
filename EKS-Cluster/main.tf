@@ -52,7 +52,11 @@ module "eks" {
       max_size     = 3
       desired_size = 2
 
-      instance_types = ["t3.medium"] # ← Use plural and larger size
+      
+    capacity_type  = "ON_DEMAND"
+    instance_types = ["t3.medium"]
+    ami_type       = "AL2_x86_64"
+ 
     }
   }
 
