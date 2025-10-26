@@ -39,11 +39,7 @@ module "eks" {
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  cluster_endpoint_access = {
-  public_access       = true
-  private_access      = false
-  public_access_cidrs = var.public_subnets
-}
+  
 
   eks_managed_node_groups = {
     nodes = {
