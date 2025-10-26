@@ -30,35 +30,25 @@ module "vpc" {
 
 
 module "eks" {
-source  = "terraform-aws-modules/eks/aws"
+  source  = "terraform-aws-modules/eks/aws"
   version = "~> 21.0"
 
   name               = "my-eks-cluster"
-  kubernetes_version = "1.33"
-
-  # Optional
-  #endpoint_public_access = true
-
-  # Optional: Adds the current caller identity as an administrator via cluster access entry
-  #enable_cluster_creator_admin_permissions = true
-
-  compute_config = {
-    enabled    = true
-    node_pools = ["general-purpose"]
-  }
+  kubernetes_version = "1.30" # ← Change to a supported version
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
   eks_managed_node_groups = {
     nodes = {
-    min_size = 1
-    max_size = 3
-    desired_size = 2
+      min_size     = 1
+      max_size     = 3
+      desired_size = 2
 
-    instance_type = ["t3.small"]
+      instance_types = ["t3.medium"] # ← Use plural and larger size
+    }
   }
-  }
+
   tags = {
     Environment = "dev"
     Terraform   = "true"
